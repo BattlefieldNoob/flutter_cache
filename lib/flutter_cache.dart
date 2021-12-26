@@ -81,9 +81,9 @@ Future load(String key, [var defaultValue = null, bool list = false]) async {
 *
 * @return void
 */
-void clear() async {
+Future clear() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.clear();
+  await prefs.clear();
 }
 
 /*
@@ -91,13 +91,13 @@ void clear() async {
 *
 * @return void
 */
-void destroy(String key) async {
+Future destroy(String key) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   Map keys = jsonDecode(prefs.getString(key)!);
 
   // remove all cache trace
-  prefs.remove(key);
-  prefs.remove(keys['content']);
-  prefs.remove(keys['type']);
-  prefs.remove(key + 'ExpiredAt');
+  await prefs.remove(key);
+  await prefs.remove(keys['content']);
+  await prefs.remove(keys['type']);
+  await prefs.remove(key + 'ExpiredAt');
 }
