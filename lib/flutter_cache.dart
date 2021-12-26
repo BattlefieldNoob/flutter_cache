@@ -93,7 +93,12 @@ Future clear() async {
 */
 Future destroy(String key) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  Map keys = jsonDecode(prefs.getString(key)!);
+  final valueDescriptor = prefs.getString(key);
+
+  if(valueDescriptor == null)
+    return;
+
+  Map keys = jsonDecode(valueDescriptor);
 
   // remove all cache trace
   await prefs.remove(key);
